@@ -1,80 +1,62 @@
 package org.moshun.botscrew_university_app.controller;
 
-import org.moshun.botscrew_university_app.service.CommandVerifier;
-import org.moshun.botscrew_university_app.service.DepartmentService;
-import org.moshun.botscrew_university_app.service.LectorService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import jakarta.annotation.PostConstruct;
+import org.moshun.botscrew_university_app.command.Command;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Scanner;
 
 @Component
 public class ConsoleController implements CommandLineRunner {
 
-    private final DepartmentService departmentService;
-    private final LectorService lectorService;
-    private final CommandVerifier commandVerifier;
+    private final List<Command> commands;
+    private final Map<String, Command> commandMap = new HashMap<>();
 
-    public ConsoleController(DepartmentService departmentService,
-                             LectorService lectorService,
-                             CommandVerifier commandVerifier) {
-        this.departmentService = departmentService;
-        this.lectorService = lectorService;
-        this.commandVerifier = commandVerifier;
+    public ConsoleController(List<Command> commands) {
+        this.commands = commands;
     }
 
+    @PostConstruct
+    public void init() {
+        for (Command command : commands) {
+            commandMap.put(command.getName(), command);
+        }
+    }
 
     @Override
     public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
-        String command = "";
-        String query = "";
+        String command;
+        String query;
         showInterface();
+
         while (true) {
-            System.out.println("Please enter a command: ");
+            System.out.print("Please enter a command: ");
             command = scanner.nextLine();
-            if (!commandVerifier.checkCommand(command)) {
-                System.out.println("Invalid command");
-                showCommands();
-            } else {
-                System.out.println("Please enter department name or template for Global search : ");
-                query = scanner.nextLine();
+
+            if ("quit".equalsIgnoreCase(command)) {
+                System.out.println("Goodbye!");
+                System.exit(0);
+                return;
             }
 
+            if (!commandMap.containsKey(command)) {
+                System.out.println("Invalid command");
+                showCommands();
+                continue;
+            }
 
-            switch (command) {
-                case "1":
-                    String headOfDepartment = departmentService
-                            .getHeadOfDepartment(query);
-                    System.out.println("Head of " + query
-                            + " department is " + headOfDepartment);
-                    break;
-                case "2":
-                    String lectorsStatistic = departmentService
-                            .getLectorsStatistic(query);
-                    System.out.println(lectorsStatistic);
-                    break;
-                case "3":
-                    String lectorsAverageSalary = departmentService
-                            .getLectorsAverageSalary(query);
-                    System.out.println("The average salary of "
-                            + query + " is " + lectorsAverageSalary);
-                    break;
-                case "4":
-                    String countOfEmployee = departmentService.
-                            getCountOfEmployee(query);
-                    System.out.println("Employee in "
-                            + query + " : " + countOfEmployee);
-                    break;
-                case "5":
-                    List<String> globalSearch = lectorService.globalSearch(query);
-                    System.out.println(globalSearch);
-                    break;
-                case "quit":
-                    System.out.println("Goodbye!");
-                    System.exit(0);
-                    break;
+            System.out.print("Please enter department name or template for Global search: ");
+            query = scanner.nextLine();
+
+            Command cmd = commandMap.get(command);
+            if (cmd != null) {
+                cmd.execute(query);
+            } else {
+                System.out.println("Command not found.");
             }
         }
     }

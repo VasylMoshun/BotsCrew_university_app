@@ -1,7 +1,6 @@
 package org.moshun.botscrew_university_app.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

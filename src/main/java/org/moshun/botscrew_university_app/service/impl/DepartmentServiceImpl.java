@@ -2,7 +2,6 @@ package org.moshun.botscrew_university_app.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.moshun.botscrew_university_app.model.Lector;
 import org.moshun.botscrew_university_app.repo.DepartmentRepository;

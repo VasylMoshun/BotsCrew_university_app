@@ -2,9 +2,9 @@ package org.moshun.botscrew_university_app.repo;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import org.moshun.botscrew_university_app.model.Department;
 import org.moshun.botscrew_university_app.model.Lector;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.moshun.botscrew_university_app.model.Department;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
