@@ -17,7 +17,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public String getHeadOfDepartment(String departmentName) {
         Optional<Lector> headOfDepartment = departmentRepository.findHeadOfDepartment(departmentName);
         return headOfDepartment.map((lector) -> lector.getFirstname()
-                + " " + lector.getLastname()).orElse("Could not find");
+                + " " + lector.getLastname()).orElse("Not found");
     }
 
     @Override

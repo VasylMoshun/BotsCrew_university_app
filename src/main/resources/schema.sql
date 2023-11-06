@@ -1,4 +1,11 @@
-CREATE DATABASE `university_app` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE TABLE `lectors` (
+                           `salary` decimal(38,2) DEFAULT NULL,
+                           `id` bigint NOT NULL AUTO_INCREMENT,
+                           `degree` enum('ASSISTANT','ASSOCIATE_PROFESSOR','PROFESSOR') DEFAULT NULL,
+                           `firstname` varchar(255) DEFAULT NULL,
+                           `lastname` varchar(255) DEFAULT NULL,
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE `departments` (
                                `head_of_department_id` bigint DEFAULT NULL,
@@ -9,6 +16,7 @@ CREATE TABLE `departments` (
                                CONSTRAINT `FK2vg5b7cndx04ue0eplk3lmbx1` FOREIGN KEY (`head_of_department_id`) REFERENCES `lectors` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
+
 CREATE TABLE `departments_personnel` (
                                          `department_id` bigint NOT NULL,
                                          `personnel_id` bigint NOT NULL,
@@ -18,11 +26,4 @@ CREATE TABLE `departments_personnel` (
                                          CONSTRAINT `FKqeoqj19r9t34i1wddtsu991l0` FOREIGN KEY (`personnel_id`) REFERENCES `lectors` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE `lectors` (
-                           `salary` decimal(38,2) DEFAULT NULL,
-                           `id` bigint NOT NULL AUTO_INCREMENT,
-                           `degree` enum('ASSISTANT','ASSOCIATE_PROFESSOR','PROFESSOR') DEFAULT NULL,
-                           `firstname` varchar(255) DEFAULT NULL,
-                           `lastname` varchar(255) DEFAULT NULL,
-                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
