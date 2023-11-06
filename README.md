@@ -1,4 +1,5 @@
-## You should have run MYSQL on port 3306 
-- this project includes docker-compose.yml with MYSQL configuration
-- run schema.sql to create a table
-- run data.sql to add data to the database
+## To start a project:
+- You should have run MYSQL on port 3306 
+- This project includes docker-compose.yml with MYSQL configuration
+- Run schema.sql to create a table
+- Run data.sql to add data to the database
